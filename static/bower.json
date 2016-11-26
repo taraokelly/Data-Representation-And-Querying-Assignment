@@ -1,0 +1,17 @@
+{
+  "name": "WebApp",
+  "authors": [
+    "taraokelly <taraokelly2@gmail.com>"
+  ],
+  "description": "Single-Page Web Application, Data Representation and Querying Assignment, 2016.",
+  "main": "main.js",
+  "license": "GMIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+   <link rel = "stylesheet" href="static/lib/bootstrap/dist/css/bootstrap.css">
+
+   <title>TheFeed</title>
+   <nav class="navbar navbar-full navbar-dark bg-primary">
+   		<br/>
+  		<a class="navbar-brand" href="#">
+		    <img src="/static/TheFeed1.png" width="150" height="30" alt="">
+	  	</a>
+		<div class="pull-right">
+	        <ul class="nav navbar-nav">
+	            <li>	
+		    	<form class ="form-inline">	
+					<div class="form-group">
+						<label for="name">Username:</label> 
+						<input type="text" class="form-control" id= "name">
+					</div> 	
+					<div class="form-group">
+						<label for="name">Password:</label> 
+						<input type="password" class="form-control" id= "pass">
+					</div> 
+					<button type="submit" id="submit" class="btn btn-primary"> Login </button> 
+				</form>
+			</li>
+	        </ul>     
+		</div>
+	</nav>
+  </head>
+  <body>
+	
+	<div class="container">
+		<br/><br/>
+			<div class="alert alert-danger" role="alert">
+			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Error:</span>
+			 Enter a valid email address
+			</div>
+			<br/>
+			<form>
+				<div class="form-group">
+					<label for="serveroutput">Server result</label> 
+					<textarea type= 'text' class="form-control" id="serveroutput" disabled> 
+					</textarea>
+				</div>	
+			</form>
+	<br/><hr><br/>
+	<h3>Don't have an account? Sign up!</h3>
+	<br/>
+	<form>
+			<div class="form-group">
+				<label for="name">Create Username:</label> 
+				<input type="text" class="form-control" id= "newName">
+			</div> 
+			<div class="form-group">
+				<label for="name">Create Password:</label> 
+				<input type="password" class="form-control" id= "newPass">
+			</div> 
+			<div class="form-group">
+				<label for="name">Re-Enter Password:</label> 
+				<input type="password" class="form-control" id= "checkPass">
+			</div> 
+			<button type="submit" id="register" class="btn btn-success" > Sign Up </button> 
+		</form>
+</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="static\lib\jquery\dist\jquery.js"></script> 
+	
+	<script>
+	$("#submit").click(function(e) {
+		e.preventDefault();
+		data = {userinput: $("#name").val(), password: $("#pass").val()}
+		$.post("/name", data, function(resbody)
+			{
+			$("#serveroutput").text(resbody);
+		});
+	});
+	$("#register").click(function(e) {
+		e.preventDefault();
+		data = {user: $("#newName").val(), pass: $("#newPass").val(), pass1: $("#checkPass").val()}
+		$.post("/register", data, function(resbody)
+			{
+			$("#serveroutput").text(resbody);
+		});
+	});
+	</script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ </body>
+</html>
