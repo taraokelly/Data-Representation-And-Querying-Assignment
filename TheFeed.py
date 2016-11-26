@@ -10,21 +10,10 @@ couch = couchdb.Server()
 
 couch = couchdb.Server('http://127.0.0.1:5984/')
 
-# to create new database
-#db = couch.create('test')
-
 db = couch['test1'] # existing
-
-#doc = {'foo': 'bar'}
-#db.save(doc)
-
-#	for id in db:
-#		print(id)
-
 
 @app.route("/")
 def root():
-    #return app.send_static_file('index.html')
     return render_template("index.html")
 
 @app.route('/name', methods=["GET", "POST"])
@@ -35,23 +24,31 @@ def login():
 		doc = db[id]
 		if(doc['username']== name):
 			if(doc['password']== password):
-				return 'Login for user ' + doc['username'] + ' successful.'
+				return '/Home'
 			if(doc['password']!= password):
-				return 'Invalid Password'
-	return 'User not found'
+				return '/Error/Invalid Password'
+	return '/Error/User Not Found'
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
 	name = fl.request.values["user"]
 	password = fl.request.values["pass"]
 	password1 = fl.request.values["pass1"]
+	for id in db:
+		doc = db[id]
+		if(doc['username']== name):
+			return '/Error/Username Already Exists'
 	if(password!=password1):
-		string = 'Passwords do not match'
+		string = '/Error/Passwords Do Not Match'
 	else:
-		string = name + ' added successfully'
+		string = 'User Account Added Successfully'
 		doc = {'username': name, 'password': password}
 		db.save(doc)
 	return string
+
+@app.route("/Error/<reason>")
+def error(reason):
+	return render_template("index.html", error=reason)
 
 @app.route('/Home')
 def exampletwo():
