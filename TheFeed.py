@@ -12,6 +12,7 @@ couch = couchdb.Server('http://127.0.0.1:5984/')
 
 db = couch['test1'] # existing
 
+
 @app.route("/")
 def root():
     return render_template("index.html")
@@ -41,7 +42,7 @@ def register():
 	if(password!=password1):
 		string = '/Error/Passwords Do Not Match'
 	else:
-		string = 'User Account Added Successfully'
+		string = 'Congrats ' + name + '!'
 		doc = {'username': name, 'password': password}
 		db.save(doc)
 	return string
