@@ -12,10 +12,14 @@ couch = couchdb.Server('http://127.0.0.1:5984/')
 
 db = couch['test1'] # existing
 
+loggedIn = 0
 
 @app.route("/")
 def root():
-    return render_template("index.html")
+	if(loggedIn==0):
+		return render_template("index.html", loggedOut="loggedOut")
+	return render_template("index.html")
+
 
 @app.route('/name', methods=["GET", "POST"])
 def login():
@@ -25,6 +29,8 @@ def login():
 		doc = db[id]
 		if(doc['username']== name):
 			if(doc['password']== password):
+				global loggedIn
+				loggedIn = 1
 				return '/Home'
 			if(doc['password']!= password):
 				return '/Error/Invalid Password'
@@ -49,12 +55,19 @@ def register():
 
 @app.route("/Error/<reason>")
 def error(reason):
-	return render_template("index.html", error=reason)
+	if(loggedIn==0):
+		return render_template("index.html", loggedOut = "loggedOut", error=reason)
+	return render_template("index.html")
 
 @app.route('/Home')
 def exampletwo():
-	header = "Second example"
-	return render_template("example.html", header=header)
+	if(loggedIn==0):
+		return render_template("index.html", loggedOut="loggedOut")
+	return render_template("index.html")
+
+#@app.route('/Home/<name>')
+
+#@app.route('/Home/logout')
 
 if __name__ == "__main__":
    app.run()

@@ -15,9 +15,9 @@
    <script src="static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
    {% endif %}
    <title>TheFeed</title>
-   <nav class="navbar navbar-full navbar-dark bg-primary">
-   		<br/>
-   		 {% if error %}
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    {% if error %}
    		 <a class="navbar-brand" href="#">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
 	  	</a>
@@ -26,23 +26,16 @@
 			<img src="/static/TheFeed1.png">
 	  	</a>
 	  	{% endif %}
-		<div class="pull-right">
-	        <ul class="nav navbar-nav">
-	            <li>	
-		    	<form class ="form-inline float-xs-right">	
-					<div class="form-group">
-						<label for="name">Username:</label> 
-						<input type="text" class="form-control" id= "name">
+	    <form class="navbar-form navbar-right">
+	      <div class="form-group">
+						<input type="text" class="form-control" placeholder="Username" id= "name">
 					</div> 	
 					<div class="form-group">
-						<label for="name">Password:</label> 
-						<input type="password" class="form-control" id= "pass">
+						<input type="password" class="form-control" placeholder="Password" id= "pass">
 					</div>
-					<button type="submit" id="submit" class="btn btn-primary"> Login </button> 
-				</form>
-			</li>
-	        </ul>     
-		</div>
+	      <button type="submit" id="submit" class="btn btn-warning">Login</button>
+	    </form>
+	  </div>
 	</nav>
   </head>
   <body>
