@@ -1,5 +1,5 @@
 import couchdb
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask import request
 
 import flask as fl
@@ -14,12 +14,13 @@ db = couch['test1'] # existing
 
 loggedIn = 0
 
+user = {'username': 'Miguel'}
+
 @app.route("/")
 def root():
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut="loggedOut")
-	return render_template("index.html")
-
+	return render_template("index.html", home="home", user=user)
 
 @app.route('/name', methods=["GET", "POST"])
 def login():
@@ -31,7 +32,7 @@ def login():
 			if(doc['password']== password):
 				global loggedIn
 				loggedIn = 1
-				return '/Home'
+				return '/'
 			if(doc['password']!= password):
 				return '/Error/Invalid Password'
 	return '/Error/User Not Found'
@@ -57,12 +58,6 @@ def register():
 def error(reason):
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut = "loggedOut", error=reason)
-	return render_template("index.html")
-
-@app.route('/Home')
-def exampletwo():
-	if(loggedIn==0):
-		return render_template("index.html", loggedOut="loggedOut")
 	return render_template("index.html")
 
 #@app.route('/Home/<name>')
