@@ -60,7 +60,11 @@ def error(reason):
 		return render_template("index.html", loggedOut = "loggedOut", error=reason)
 	return render_template("index.html")
 
-#@app.route('/Home/<name>')
+@app.route('/profile')
+def profile():
+	if(loggedIn==0):
+		return render_template("index.html", loggedOut = "loggedOut")
+	return render_template("index.html", profile="profile")
 
 #@app.route('/Home/logout')
 

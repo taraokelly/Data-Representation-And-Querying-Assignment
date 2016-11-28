@@ -16,7 +16,7 @@
    	<!-- Adapted from http://www.w3schools.com/bootstrap/bootstrap_navbar.asp and https://v4-alpha.getbootstrap.com/components/navbar/ -->
   	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
-	    <a class="navbar-brand" href="#">
+	    <a class="navbar-brand" href="#" id="nav_home">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
 	  	</a>
 	    <ul class="nav navbar-nav">
@@ -31,4 +31,30 @@
 	</nav>
   	{% endif %}
   </head>
+  <body>
+  	<div class="container">
+  	  	<br/>
+		{% if home %}
+		<h2>Hi {{ cur_doc.username }}!</h2>
+		<hr>
+		<p>Some home stuff</p>
+		{% endif %}
+		{% if profile %}
+		<p>Some profile stuff</p>
+		{% endif %}
+		{% if logout %}
+		<p>Some logout stuff</p>
+		{% endif %}
+	</div>
+  	<script type="text/javascript">
+  	$("#nav_home").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/profile";
+  	});
+  	$("#nav_profile").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/profile";
+  	});
+  	</script>
+  </body>
 </html>
