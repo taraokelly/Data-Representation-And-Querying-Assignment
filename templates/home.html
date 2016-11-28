@@ -10,8 +10,7 @@
   	<!--<form class ="form-inline">-->
   	<form>
 		<div class="form-group">
-			<!--<label for="name">Hey {{ cur_doc.username }}! How are you feeling today?</label> -->
-			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! How are you feeling today?"></textarea>
+			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! Would you like to share something?"></textarea>
 		</div> 
 		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
 	</form>
@@ -34,14 +33,12 @@
   		e.preventDefault();
   		window.location = "/profile";
   	});
-	/*$("#add_post").click(function(e) {
+	$("#add_post").click(function(e) {
 		e.preventDefault();
-		data = {userinput: $("#post_content").val()}
-		$.post("/login", data, function(resbody)
-			{
-				window.location = resbody;
-		});
-	});*/
+		data = {post_content: $("#post_content").val()}
+		$.post("/addPost", data);
+		window.location = "/";
+	});
   	</script>
   </body>
   </html>

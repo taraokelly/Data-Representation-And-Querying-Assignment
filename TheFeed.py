@@ -26,7 +26,7 @@ def root():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-	name = fl.request.values["userinput"]
+	name = fl.request.values["username"]
 	password = fl.request.values["password"]
 	for id in db:
 		doc = db[id]
@@ -65,6 +65,13 @@ def register():
 		doc = {'username': name, 'password': password}
 		db.save(doc)
 	return string
+
+@app.route('/addPost', methods=["GET", "POST"])
+def addPost():
+	post_content = fl.request.values["post_content"]
+	doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'tags' : ''}
+	db1.save(doc)
+	return ''
 
 @app.route("/Error/<reason>")
 def error(reason):
