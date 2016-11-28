@@ -14,13 +14,15 @@ db = couch['test1'] # existing
 
 loggedIn = 0
 
+cur_doc = ""
+
 user = {'username': 'Miguel'}
 
 @app.route("/")
 def root():
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut="loggedOut")
-	return render_template("index.html", home="home", user=user)
+	return render_template("index.html", home="home", cur_doc=cur_doc)
 
 @app.route('/name', methods=["GET", "POST"])
 def login():
@@ -32,6 +34,8 @@ def login():
 			if(doc['password']== password):
 				global loggedIn
 				loggedIn = 1
+				global cur_doc
+				cur_doc = db[id]
 				return '/'
 			if(doc['password']!= password):
 				return '/Error/Invalid Password'
