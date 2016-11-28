@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TheFeed</title>
+  </head>
+  <body>
+  	<br/>
+  	<!--<form class ="form-inline">-->
+  	<form>
+		<div class="form-group">
+			<!--<label for="name">Hey {{ cur_doc.username }}! How are you feeling today?</label> -->
+			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! How are you feeling today?"></textarea>
+		</div> 
+		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
+	</form>
+	<br/>
+  	<h2>Hi {{ cur_doc.username }}!</h2>
+	<hr>
+	<p>Some home stuff</p>
+	{% block content %}{% endblock %}
+
+	<script type="text/javascript">
+  	$("#nav_brand").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
+  	$("#nav_home").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
+  	$("#nav_profile").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/profile";
+  	});
+	/*$("#add_post").click(function(e) {
+		e.preventDefault();
+		data = {userinput: $("#post_content").val()}
+		$.post("/login", data, function(resbody)
+			{
+				window.location = resbody;
+		});
+	});*/
+  	</script>
+  </body>
+  </html>

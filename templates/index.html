@@ -9,14 +9,14 @@
     <link rel = "stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.css') }}">
    	<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.js') }}"></script>
    	<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-   	<title>TheFeed</title>
+   <!--	<title>TheFeed</title>-->
     {% if loggedOut %}
   	{% extends "login.html" %}
   	{% else %}
    	<!-- Adapted from http://www.w3schools.com/bootstrap/bootstrap_navbar.asp and https://v4-alpha.getbootstrap.com/components/navbar/ -->
   	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
-	    <a class="navbar-brand" href="#" id="nav_home">
+	    <a class="navbar-brand" href="#" id="nav_brand">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
 	  	</a>
 	    <ul class="nav navbar-nav">
@@ -33,28 +33,37 @@
   </head>
   <body>
   	<div class="container">
-  	  	<br/>
+
 		{% if home %}
-		<h2>Hi {{ cur_doc.username }}!</h2>
+		<!--<h2>Hi {{ cur_doc.username }}!</h2>
 		<hr>
-		<p>Some home stuff</p>
+		<p>Some home stuff</p>-->
+		{% extends "home.html" %}
 		{% endif %}
 		{% if profile %}
-		<p>Some profile stuff</p>
+		{% extends "profile.html" %}
+		<!--<p>Some profile stuff</p>-->
 		{% endif %}
 		{% if logout %}
 		<p>Some logout stuff</p>
 		{% endif %}
+		{% block content %}
+		<h1>Tester</h1>
+		{% endblock %}
 	</div>
-  	<script type="text/javascript">
+<!--  	<script type="text/javascript">
+  	$("#nav_brand").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
   	$("#nav_home").click(function(e) {
   		e.preventDefault();
-  		window.location = "/profile";
+  		window.location = "/";
   	});
   	$("#nav_profile").click(function(e) {
   		e.preventDefault();
   		window.location = "/profile";
   	});
-  	</script>
+  	</script>-->
   </body>
 </html>

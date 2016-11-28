@@ -12,11 +12,11 @@ couch = couchdb.Server('http://127.0.0.1:5984/')
 
 db = couch['test1'] # existing
 
+db1 = couch['posts']
+
 loggedIn = 0
 
 cur_doc = ""
-
-user = {'username': 'Miguel'}
 
 @app.route("/")
 def root():
@@ -24,7 +24,7 @@ def root():
 		return render_template("index.html", loggedOut="loggedOut")
 	return render_template("index.html", home="home", cur_doc=cur_doc)
 
-@app.route('/name', methods=["GET", "POST"])
+@app.route('/login', methods=["GET", "POST"])
 def login():
 	name = fl.request.values["userinput"]
 	password = fl.request.values["password"]
@@ -50,8 +50,16 @@ def register():
 		doc = db[id]
 		if(doc['username']== name):
 			return '/Error/Username Already Exists'
-	if(password!=password1):
+	if(not bool(name)):
+		string = '/Error/Enter Username'
+	elif(name.isspace()):
+		string = '/Error/Username Must Contain Characters'
+	elif(password!=password1):
 		string = '/Error/Passwords Do Not Match'
+	elif(' ' in password):
+		string = '/Error/Password Contains Spaces'
+	elif(len(password) < 8):
+		string = '/Error/Password Must Contain 8 Characters'
 	else:
 		string = 'Congrats ' + name + '!'
 		doc = {'username': name, 'password': password}
@@ -68,7 +76,7 @@ def error(reason):
 def profile():
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut = "loggedOut")
-	return render_template("index.html", profile="profile")
+	return render_template("index.html", profile="profile", cur_doc=cur_doc)
 
 #@app.route('/Home/logout')
 

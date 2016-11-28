@@ -44,6 +44,7 @@
 				<div class="form-group">
 					<label for="name">Create Password:</label> 
 					<input type="password" class="form-control" id= "newPass">
+					<small id="passwordHelp" class="form-text text-muted">Your password must contain no spaces.</small>
 				</div> 
 				<div class="form-group">
 					<label for="name">Re-Enter Password:</label> 
@@ -71,7 +72,7 @@
 	$("#submit").click(function(e) {
 		e.preventDefault();
 		data = {userinput: $("#name").val(), password: $("#pass").val()}
-		$.post("/name", data, function(resbody)
+		$.post("/login", data, function(resbody)
 			{
 				window.location = resbody;
 		});
@@ -83,8 +84,12 @@
 			{
 				// Adapted from http://www.w3schools.com/Jsref/jsref_localecompare.asp
 				var str1 = "/Error/Passwords Do Not Match";
-				var str2 = "/Error/Username Already Exists"
-				if(str1.localeCompare(resbody) == 0 || str2.localeCompare(resbody) == 0)
+				var str2 = "/Error/Username Already Exists";
+				var str3 = "/Error/Password Contains Spaces";
+				var str4 = "/Error/Password Must Contain 8 Characters";
+				var str5 = "/Error/Enter Username";
+				var str6 = "/Error/Username Must Contain Characters";
+				if(str1.localeCompare(resbody) == 0 || str2.localeCompare(resbody) == 0 || str3.localeCompare(resbody) == 0 || str4.localeCompare(resbody) == 0 || str5.localeCompare(resbody) == 0 || str6.localeCompare(resbody) == 0)
 					window.location = resbody;
 				else
 				//Adapted from http://stackoverflow.com/questions/28924551/how-to-open-bootstrap-modal-in-ajax-success
