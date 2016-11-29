@@ -1,7 +1,6 @@
 import couchdb
 import json
-import ast
-import pickle
+import time
 from flask import Flask, render_template, request
 from flask import request
 
@@ -29,6 +28,7 @@ def root():
 	docs = [row.doc for row in rows]
 	test = json.dumps((docs), indent=4)
 	tester = json.loads(test)
+	tester.reverse()
 	return render_template("index.html", home="home", cur_doc=cur_doc, posts=tester)
 
 @app.route('/login', methods=["GET", "POST"])
@@ -77,6 +77,7 @@ def register():
 def addPost():
 	post_content = fl.request.values["post_content"]
 	post_tags = fl.request.values["post_tags"]
+	post_time = time.strftime("%c")
 	if(not bool(post_content) or post_content.isspace()):
 		return 'Error'
 	tags = {tag.strip("#") for tag in post_tags.split() if tag.startswith("#")}
@@ -95,11 +96,10 @@ def addPost():
 			tags1 += '}'
 			count+=1
 		tags1 += ']'  
-		print(tags1)
 		tags = json.loads(tags1)
+		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : tags }
 	else:
-		tags=''
-	doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'tags' : tags }
+		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time}
 	db1.save(doc)
 	return ''
 
