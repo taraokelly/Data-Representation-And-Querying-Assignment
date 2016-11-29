@@ -16,17 +16,19 @@
 		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
 	</form>
 	<br/>
-  	<h2>Hi {{ cur_doc.username }}!</h2>
 	<hr>
-	<p>Some home stuff</p>
-	<div class="panel panel-warning">
-      <div class="panel-heading">Panel with panel-warning class</div>
-      <div class="panel-body">Panel Content</div>
+	{% for post in posts %}
+	<div class="panel panel-info">
+      <div class="panel-heading">{{ post.username }}</div>
+      <div class="panel-body">{{ post.post_content }}</div>
     </div>
+    {% endfor %}
 
 	{% block content %}{% endblock %}
 
 	<script type="text/javascript">
+	var posts = {{ posts|safe }};
+
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();
   		window.location = "/";

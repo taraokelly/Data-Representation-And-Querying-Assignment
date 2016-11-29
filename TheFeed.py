@@ -1,5 +1,7 @@
 import couchdb
 import json
+import ast
+import pickle
 from flask import Flask, render_template, request
 from flask import request
 
@@ -23,7 +25,11 @@ cur_doc = ""
 def root():
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut="loggedOut")
-	return render_template("index.html", home="home", cur_doc=cur_doc)
+	rows = db1.view('_all_docs', include_docs=True)
+	docs = [row.doc for row in rows]
+	test = json.dumps((docs), indent=4)
+	tester = json.loads(test)
+	return render_template("index.html", home="home", cur_doc=cur_doc, posts=tester)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
