@@ -13,9 +13,11 @@
 			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! Would you like to share something?"></textarea>
 			<input type="text" class="form-control" id= "post_tags" placeholder="#tags #...">
 		</div> 
-		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
+		<div class="pull-right">
+			<button type="submit" id="add_post" class="btn btn-primary btn-lg"> Post </button> 
+		</div>
 	</form>
-	<br/>
+	<br/><br/>
 	<hr>
 	{% for post in posts %}
 	<div class="panel panel-info">

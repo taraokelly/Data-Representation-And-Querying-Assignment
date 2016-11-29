@@ -83,19 +83,15 @@ def addPost():
 	tags = {tag.strip("#") for tag in post_tags.split() if tag.startswith("#")}
 	count=0
 	if(bool(tags)):
+		count =0 
 		for tag in tags:
 			if(count==0):
 				tags1 = '['
 			else:
 				tags1 += ','
-			tags1 += '{ "tag"' 
-			tags1 += ' : ' 
-			tags1 += '"'
-			tags1 += tag 
-			tags1 += '"' 
-			tags1 += '}'
+			tags1 += '{ "tag" : "'+ tag + '"}'
 			count+=1
-		tags1 += ']'  
+		tags1 += ']' 
 		tags = json.loads(tags1)
 		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : tags }
 	else:
@@ -113,7 +109,21 @@ def error(reason):
 def profile():
 	if(loggedIn==0):
 		return render_template("index.html", loggedOut = "loggedOut")
-	return render_template("index.html", profile="profile", cur_doc=cur_doc)
+	count = 0
+	for id in db1:
+		doc=db1[id]
+		if(doc['username']==cur_doc['username']):
+			if(count==0):
+				string = '['
+			else:
+				string += ','
+			string += '{"username": "'+ doc['username'] +'", "post_content": "'+ doc['post_content'] +'", "post_time": "'+ doc['post_time'] +'"}'
+			count+=1
+	if(count!=0):
+		string+=']'
+	posts = json.loads(string)
+	posts.reverse()
+	return render_template("index.html", profile="profile", cur_doc=cur_doc, posts=posts)
 
 #@app.route('/Home/logout')
 

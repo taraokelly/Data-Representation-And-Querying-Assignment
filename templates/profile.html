@@ -7,16 +7,32 @@
   </head>
   <body>
   	<br/>
+  	<center>
+  	<h2>{{ cur_doc.username }}</h2>
+  	</center>
+  	<br/>
   	<!--<form class ="form-inline">-->
   	<form>
-		<div class="form-group">
+	<div class="form-group">
 			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! Would you like to share something?"></textarea>
 			<input type="text" class="form-control" id= "post_tags" placeholder="#tags #...">
 		</div> 
-		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
+		<div class="pull-right">
+			<button type="submit" id="add_post" class="btn btn-primary btn-lg"> Post </button> 
+		</div>
 	</form>
-	<br/>
-  	<p>Some profile stuff</p>
+	<br/><br/>
+	<hr>
+	{% for post in posts %}
+	<div class="panel panel-info">
+      <div class="panel-heading">{{ post.username }}</div>
+      <div class="panel-body">{{ post.post_content }}</div>
+      <div class="panel-footer">
+     <small class="form-text text-muted"> {{ post.post_time }}</small></div>
+    </div>
+    {% endfor %}
+
+	{% block content %}{% endblock %}
 
   	<script type="text/javascript">
   	$("#nav_brand").click(function(e) {
@@ -33,7 +49,7 @@
   	});
   	$("#add_post").click(function(e) {
 		e.preventDefault();
-		data = {post_content: $("#post_content").val()}
+		data = {post_content: $("#post_content").val(), post_tags: $("#post_tags").val()}
 		$.post("/addPost", data);
 		window.location = "/profile";
 	});

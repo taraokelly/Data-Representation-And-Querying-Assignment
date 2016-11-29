@@ -6,7 +6,7 @@
    <title>TheFeed</title>
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
-	  	<a class="navbar-brand" href="#">
+	  	<a class="navbar-brand" href="#" id="nav_brand">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
 	  	</a>
 	    <form class="navbar-form navbar-right">
@@ -70,6 +70,10 @@
 	   </div>
 	 </div>
 	<script type="text/javascript">
+	$("#nav_brand").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
 	$("#submit").click(function(e) {
 		e.preventDefault();
 		data = {username: $("#name").val(), password: $("#pass").val()}
