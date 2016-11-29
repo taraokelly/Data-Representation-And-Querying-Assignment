@@ -1,4 +1,5 @@
 import couchdb
+import json
 from flask import Flask, render_template, request
 from flask import request
 
@@ -69,7 +70,30 @@ def register():
 @app.route('/addPost', methods=["GET", "POST"])
 def addPost():
 	post_content = fl.request.values["post_content"]
-	doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'tags' : ''}
+	post_tags = fl.request.values["post_tags"]
+	if(not bool(post_content) or post_content.isspace()):
+		return 'Error'
+	tags = {tag.strip("#") for tag in post_tags.split() if tag.startswith("#")}
+	count=0
+	if(bool(tags)):
+		for tag in tags:
+			if(count==0):
+				tags1 = '['
+			else:
+				tags1 += ','
+			tags1 += '{ "tag"' 
+			tags1 += ' : ' 
+			tags1 += '"'
+			tags1 += tag 
+			tags1 += '"' 
+			tags1 += '}'
+			count+=1
+		tags1 += ']'  
+		print(tags1)
+		tags = json.loads(tags1)
+	else:
+		tags=''
+	doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'tags' : tags }
 	db1.save(doc)
 	return ''
 

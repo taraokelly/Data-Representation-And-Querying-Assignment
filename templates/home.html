@@ -11,6 +11,7 @@
   	<form>
 		<div class="form-group">
 			<textarea class="form-control" id="post_content" rows="5" placeholder="Hi {{ cur_doc.username }}! Would you like to share something?"></textarea>
+			<input type="text" class="form-control" id= "post_tags" placeholder="#tags #...">
 		</div> 
 		<button type="submit" id="add_post" class="btn btn-primary"> Post </button> 
 	</form>
@@ -18,6 +19,11 @@
   	<h2>Hi {{ cur_doc.username }}!</h2>
 	<hr>
 	<p>Some home stuff</p>
+	<div class="panel panel-warning">
+      <div class="panel-heading">Panel with panel-warning class</div>
+      <div class="panel-body">Panel Content</div>
+    </div>
+
 	{% block content %}{% endblock %}
 
 	<script type="text/javascript">
@@ -35,7 +41,7 @@
   	});
 	$("#add_post").click(function(e) {
 		e.preventDefault();
-		data = {post_content: $("#post_content").val()}
+		data = {post_content: $("#post_content").val(), post_tags: $("#post_tags").val()}
 		$.post("/addPost", data);
 		window.location = "/";
 	});
