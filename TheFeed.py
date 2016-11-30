@@ -33,6 +33,7 @@ def profile():
 
 @app.route('/search')
 def search():
+	
 	return ''
 
 @app.route('/settings')

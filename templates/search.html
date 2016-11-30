@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TheFeed - Search</title>
+  </head>
+  <body>
+  	<br/>
+  	<center>
+  	<h2>Search Results</h2>
+  	</center>
+  	<br/>
+	<hr>
+	{% for post in posts %}
+	<div class="panel panel-info">
+      <div class="panel-heading">{{ post.username }}</div>
+      <div class="panel-body">{{ post.post_content }}</div>
+      <div class="panel-footer">
+     <small class="form-text text-muted"> {{ post.post_time }}</small></div>
+    </div>
+    {% endfor %}
+
+	{% block content %}{% endblock %}
+
+  	<script type="text/javascript">
+  	$("#nav_brand").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
+  	$("#nav_home").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/";
+  	});
+  	$("#nav_profile").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/profile";
+  	});
+  	$("#nav_settings").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/settings";
+  	});
+  	$("#nav_logout").click(function(e) {
+  		e.preventDefault();
+  		$.post("/logout");
+  		window.location = "/";
+  	});
+  	</script>
+  </body>
+  </html>
