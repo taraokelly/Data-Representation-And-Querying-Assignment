@@ -31,8 +31,6 @@
 	{% block content %}{% endblock %}
 
 	<script type="text/javascript">
-	var posts = {{ posts|safe }};
-
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();
   		window.location = "/";
@@ -44,6 +42,11 @@
   	$("#nav_profile").click(function(e) {
   		e.preventDefault();
   		window.location = "/profile";
+  	});
+  	$("#nav_logout").click(function(e) {
+  		e.preventDefault();
+  		$.post("/logout");
+  		window.location = "/";
   	});
 	$("#add_post").click(function(e) {
 		e.preventDefault();
