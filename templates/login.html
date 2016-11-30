@@ -77,8 +77,7 @@
 	$("#submit").click(function(e) {
 		e.preventDefault();
 		data = {username: $("#name").val(), password: $("#pass").val()}
-		$.post("/login", data, function(resbody)
-			{
+		$.post("/login", data, function(resbody){
 				window.location = resbody;
 		});
 	});

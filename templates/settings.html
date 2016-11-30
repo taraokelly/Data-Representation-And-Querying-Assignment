@@ -13,6 +13,8 @@
   <br/><hr/><br/>
   <button type="button" class="btn btn-success btn-block" id="update_name"><b>Change Username</b></button>
   <br/><br/>
+  <button type="button" class="btn btn-success btn-block" id="update_password"><b>Change Password</b></button>
+  <br/><br/>
   <button type="button" class="btn btn-danger btn-block" id="delete"><b>Delete Account</b></button>
   </center>
   <!-- Modals -->
@@ -29,26 +31,70 @@
 	          <form> 	
 				<div class="form-group">
 					<label for="check_password">Enter Password:</label> 
-					<input type="password" class="form-control" placeholder="Password" id= "check_password">
+					<input type="password" class="form-control" placeholder="Password" id= "check_password_delete">
 				</div>
+				<center>
 		      <button type="submit" id="submit_delete" class="btn btn-danger">Submit</button>
+		      </center>
 		    </form>
 	       </div>
 	    </div>
 	   </div>
 	 </div>
 	 <!-- Model to Update Name -->
-	 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="eModalLabel" aria-hidden="true">
-	   <div class="modal-dialog modal-sm">
+	 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="uModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
 	      <div class="modal-content">
 	       <div class="modal-header">
-	       <small>
 	         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        </small>
-	         <h3 class="modal-title" id="eModalLabel"><b>Access Denied</b></h3>
+	         <h4 class="modal-title" id="uModalLabel">Are you sure you want to update your username?</h4>
 	       </div>
-	       <div class="modal-body" id="eModel" style="overflow-x: scroll;">
-	       	<h4 class="modal-title" id="eModalBody"></h4>
+	       <div class="modal-body" id="uModelBody" style="overflow-x: scroll;">
+	          <form> 	
+				<div class="form-group">
+					<label for="new_username">Enter New Username:</label> 
+					<input type="text" class="form-control" placeholder="Username" id= "new_username">
+					<small class="form-text text-muted">Please note that this username might already be taken.</small>
+				</div>
+				<div class="form-group">
+					<label for="check_password_update">Enter Password:</label> 
+					<input type="password" class="form-control" placeholder="Password" id= "check_password_update">
+				</div>
+				<center>
+		      <button type="submit" id="submit_update" class="btn btn-success">Submit</button>
+		      </center>
+		    </form>
+	       </div>
+	    </div>
+	   </div>
+	 </div>
+	 <!-- Model to Update Password -->
+	 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="pModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	       <div class="modal-header">
+	         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	         <h4 class="modal-title" id="pModalLabel">Are you sure you want to update your password?</h4>
+	       </div>
+	       <div class="modal-body" id="pModelBody" style="overflow-x: scroll;">
+	          <form> 	
+				<div class="form-group">
+					<label for="new_password1">Enter New Password:</label> 
+					<input type="password" class="form-control" placeholder="New Password" id= "new_password1">
+					<small id="passwordHelp" class="form-text text-muted">Your password must contain at least eight characters and <u>no spaces</u>.</small>
+				</div>
+				<div class="form-group">
+					<label for="new_password2">Re-Enter Password:</label> 
+					<input type="password" class="form-control" placeholder="New Password" id= "new_password2">
+				</div>
+				<div class="form-group">
+					<label for="check_password">Enter Password:</label> 
+					<input type="password" class="form-control" placeholder="Password" id= "check">
+				</div>
+				<center>
+		      <button type="submit" id="submit_password" class="btn btn-success">Submit</button>
+		      </center>
+		    </form>
 	       </div>
 	    </div>
 	   </div>
@@ -71,8 +117,6 @@
 	 </div>
 
   <script type="text/javascript">
-  	var del = false;
- 	var up= false;
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();
   		window.location = "/";
@@ -96,21 +140,67 @@
   	});
   	$("#delete").click(function(e) {
   		e.preventDefault();
-  		del=true;
   		$("#deleteModal").modal("toggle");
   	});
   	$("#update_name").click(function(e) {
   		e.preventDefault();
-  		$("#deleteModal").modal("toggle");
+  		$("#updateModal").modal("toggle");
+  	});
+  	$("#update_password").click(function(e) {
+  		e.preventDefault();
+  		$("#passwordModal").modal("toggle");
   	});
   	$("#submit_delete").click(function(e) {
   		e.preventDefault();
-  		data = { password: $("#check_password").val() }
+  		data = { password: $("#check_password_delete").val() }
   		$.post("/securityCheck", data, function(resbody){
-  			str1="Correct";
-  			if(str1.localeCompare(resbody) == 0){
+  			if("Correct".localeCompare(resbody) == 0){
 	  				$.post("/delete");
 	  				window.location = "/";
+  			}
+  			else{
+  				$("#errorModal").modal("toggle");
+  				$("#eModalBody").html(resbody);
+  			}
+  		});
+  	});
+  	$("#submit_update").click(function(e) {
+  		e.preventDefault();
+  		data = { password: $("#check_password_update").val() }
+  		$.post("/securityCheck", data, function(resbody){
+  			if("Correct".localeCompare(resbody) == 0){
+  					data = { name: $("#new_username").val() }
+	  				$.post("/updateName", data, function(resbody1){
+	  				if("successful".localeCompare(resbody1) == 0){
+	  					window.location = "/settings";
+	  				}
+	  				else{
+	  					$("#errorModal").modal("toggle");
+  						$("#eModalBody").html(resbody1);
+	  				}
+	  				});
+  			}
+  			else{
+  				$("#errorModal").modal("toggle");
+  				$("#eModalBody").html(resbody);
+  			}
+  		});
+  	});
+  	$("#submit_password").click(function(e) {
+  		e.preventDefault();
+  		data = { password: $("#check").val() }
+  		$.post("/securityCheck", data, function(resbody){
+  			if("Correct".localeCompare(resbody) == 0){
+  					data = { password: $("#new_password1").val(), password1: $("#new_password2").val() }
+	  				$.post("/updatePass", data, function(resbody1){
+	  				if("successful".localeCompare(resbody1) == 0){
+	  					window.location = "/settings";
+	  				}
+	  				else{
+	  					$("#errorModal").modal("toggle");
+  						$("#eModalBody").html(resbody1);
+	  				}
+	  				});
   			}
   			else{
   				$("#errorModal").modal("toggle");

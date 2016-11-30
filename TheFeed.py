@@ -14,29 +14,21 @@ cur_doc = ""
 def root():
 	if(not bool(cur_doc)):
 		return render_template("index.html", loggedOut="loggedOut")
-	rows = db1.view('_all_docs', include_docs=True)
-	docs = [row.doc for row in rows]
-	jstring = json.dumps((docs), indent=4)
-	posts = json.loads(jstring)
-	posts.reverse()
+	posts=getPosts()
 	return render_template("index.html", home="home", cur_doc=cur_doc, posts=posts)
 
 @app.route("/Error/<reason>")
 def error(reason):
 	if(not bool(cur_doc)):
 		return render_template("index.html", loggedOut = "loggedOut", error=reason)
-	rows = db1.view('_all_docs', include_docs=True)
-	docs = [row.doc for row in rows]
-	jstring = json.dumps((docs), indent=4)
-	posts = json.loads(jstring)
-	posts.reverse()
+	posts=getPosts()
 	return render_template("index.html", home="home", cur_doc=cur_doc, posts=posts)
 
 @app.route('/profile')
 def profile():
 	if(not bool(cur_doc)):
 		return render_template("index.html", loggedOut = "loggedOut")
-	posts=getPosts(cur_doc['username'])
+	posts=getPostsByUser(cur_doc['username'])
 	return render_template("index.html", profile="profile", cur_doc=cur_doc, posts=posts)
 
 @app.route('/search')
@@ -134,9 +126,47 @@ def delete():
 	cur_doc= ""
 	return ''
 
-@app.route('/update', methods=["GET","POST"])
-def update():
-	return ''
+@app.route('/updateName', methods=["GET","POST"])
+def updateName():
+	global cur_doc
+	name = fl.request.values["name"]
+	for id in db:
+		doc =db[id]
+		if(name==doc['username']):
+			return 'Username Already Exists'
+	# Database Containing Posts
+	for id in db1:
+		doc =db1[id]
+		if(doc['username']==cur_doc['username']):
+			doc['username']=name
+			db1[doc.id]=doc	
+	# Database Containing User Info
+	for id in db:
+		doc =db[id]
+		if(doc['username']==cur_doc['username']):
+			doc['username']=name
+			db[doc.id]=doc
+			cur_doc = doc
+	return 'successful'
+
+@app.route('/updatePass', methods=["GET","POST"])
+def updatePass():
+	password = fl.request.values["password"]
+	password1 = fl.request.values["password1"]
+	global cur_doc
+	if(password!=password1):
+		return 'Passwords Do Not Match'
+	elif(' ' in password):
+		return 'Password Contains Spaces'
+	elif(len(password) < 8):
+		return 'Password Must Contain 8 Characters'
+	for id in db:
+		doc =db[id]
+		if(doc['username']==doc['username']):
+			doc['password']=password
+			db[doc.id]=doc	
+			cur_doc = doc
+	return 'successful'
 
 @app.route('/securityCheck', methods=["GET","POST"])
 def check():
@@ -145,7 +175,15 @@ def check():
 		return 'Correct'
 	return 'Incorrect Password'
 
-def getPosts(username):
+def getPosts():
+	rows = db1.view('_all_docs', include_docs=True)
+	docs = [row.doc for row in rows]
+	jstring = json.dumps((docs), indent=4)
+	posts = json.loads(jstring)
+	posts.reverse()
+	return posts
+
+def getPostsByUser(username):
 	posts=[]
 	count = 0
 	for id in db1:
