@@ -48,18 +48,17 @@
  	<div class="col-sm-2"></div>
   	<div class="col-sm-8">
 		{% if home %}
-		<!--<h2>Hi {{ cur_doc.username }}!</h2>
-		<hr>
-		<p>Some home stuff</p>-->
 		{% extends "home.html" %}
 		{% endif %}
+
 		{% if profile %}
 		{% extends "profile.html" %}
-		<!--<p>Some profile stuff</p>-->
 		{% endif %}
-		{% if logout %}
-		<p>Some logout stuff</p>
+
+		{% if settings %}
+		{% extends "settings.html" %}
 		{% endif %}
+
 		{% block content %}
 		<h1>Tester</h1>
 		{% endblock %}

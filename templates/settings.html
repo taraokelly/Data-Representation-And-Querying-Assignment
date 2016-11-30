@@ -6,7 +6,73 @@
     <title>TheFeed - Settings</title>
   </head>
   <body>
+  <br/>
+  <center>
+  <h2>Settings</h2>
+  <small id="accountUser" class="form-text text-muted">User Account: {{ cur_doc.username }}</small>
+  <br/><hr/><br/>
+  <button type="button" class="btn btn-success btn-block" id="update_name"><b>Change Username</b></button>
+  <br/><br/>
+  <button type="button" class="btn btn-danger btn-block" id="delete"><b>Delete Account</b></button>
+  </center>
+  <!-- Modals -->
+	<!-- Adapted from http://stackoverflow.com/questions/28924551/how-to-open-bootstrap-modal-in-ajax-success -->
+	<!-- Model to Delete Account -->
+	 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="dModalLabel" aria-hidden="true">
+	   <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	       <div class="modal-header">
+	         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	         <h4 class="modal-title" id="dModalLabel">Are you sure you want to delete your account?</h4>
+	       </div>
+	       <div class="modal-body" id="dModelBody" style="overflow-x: scroll;">
+	          <form> 	
+				<div class="form-group">
+					<label for="check_password">Enter Password:</label> 
+					<input type="password" class="form-control" placeholder="Password" id= "check_password">
+				</div>
+		      <button type="submit" id="submit_delete" class="btn btn-danger">Submit</button>
+		    </form>
+	       </div>
+	    </div>
+	   </div>
+	 </div>
+	 <!-- Model to Update Name -->
+	 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="eModalLabel" aria-hidden="true">
+	   <div class="modal-dialog modal-sm">
+	      <div class="modal-content">
+	       <div class="modal-header">
+	       <small>
+	         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        </small>
+	         <h3 class="modal-title" id="eModalLabel"><b>Access Denied</b></h3>
+	       </div>
+	       <div class="modal-body" id="eModel" style="overflow-x: scroll;">
+	       	<h4 class="modal-title" id="eModalBody"></h4>
+	       </div>
+	    </div>
+	   </div>
+	 </div>
+	 <!-- Model to Display Errors and Messages to user -->
+	 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="eModalLabel" aria-hidden="true">
+	   <div class="modal-dialog modal-sm">
+	      <div class="modal-content">
+	       <div class="modal-header">
+	       <small>
+	         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        </small>
+	         <h3 class="modal-title" id="eModalLabel"><b>Access Denied</b></h3>
+	       </div>
+	       <div class="modal-body" id="eModel" style="overflow-x: scroll;">
+	       	<h4 class="modal-title" id="eModalBody"></h4>
+	       </div>
+	    </div>
+	   </div>
+	 </div>
+
   <script type="text/javascript">
+  	var del = false;
+ 	var up= false;
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();
   		window.location = "/";
@@ -19,12 +85,39 @@
   		e.preventDefault();
   		window.location = "/profile";
   	});
-	$("#add_post").click(function(e) {
-		e.preventDefault();
-		data = {post_content: $("#post_content").val(), post_tags: $("#post_tags").val()}
-		$.post("/addPost", data);
-		window.location = "/settings";
-	});
+  	$("#nav_settings").click(function(e) {
+  		e.preventDefault();
+  		window.location = "/settings";
+  	});
+  	$("#nav_logout").click(function(e) {
+  		e.preventDefault();
+  		$.post("/logout");
+  		window.location = "/";
+  	});
+  	$("#delete").click(function(e) {
+  		e.preventDefault();
+  		del=true;
+  		$("#deleteModal").modal("toggle");
+  	});
+  	$("#update_name").click(function(e) {
+  		e.preventDefault();
+  		$("#deleteModal").modal("toggle");
+  	});
+  	$("#submit_delete").click(function(e) {
+  		e.preventDefault();
+  		data = { password: $("#check_password").val() }
+  		$.post("/securityCheck", data, function(resbody){
+  			str1="Correct";
+  			if(str1.localeCompare(resbody) == 0){
+	  				$.post("/delete");
+	  				window.location = "/";
+  			}
+  			else{
+  				$("#errorModal").modal("toggle");
+  				$("#eModalBody").html(resbody);
+  			}
+  		});
+  	});
   </script>
   </body>
   </html>
