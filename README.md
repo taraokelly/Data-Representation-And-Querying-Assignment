@@ -20,11 +20,11 @@ I chose to create a blogging website as my single web-page application, as I tho
 
 2. HTML and Bootstrap - For the client side I used HTML and jQuery. I used Bootstap to create responsive designs in my HTML pages.
 
-3. CouchDB - I choose to utilize CouchDB as a mechanism to store data. 
+3. CouchDB - I chose to utilize CouchDB as a mechanism to store data. 
 
 **Running this application**
 
-I you do not have Python installed, you will need to install Python3([you can download it here](https://www.python.org/downloads/)). After the installation of Python, you will have to import two Python modules: 
+If you do not have Python installed, you will need to install Python3([you can download it here](https://www.python.org/downloads/)). After the installation of Python, you will have to import two Python modules: 
 
 1. Flask
 
