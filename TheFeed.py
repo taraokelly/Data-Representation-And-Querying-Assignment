@@ -114,7 +114,7 @@ def addPost():
 		tags = json.loads(temp)
 		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : tags, 'tags_string' : post_tags}
 	else:
-		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : [], 'tags_string' : post_tags}
+		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : [], 'tags_string' : post_tags} 
 	db1.save(doc)
 	return ''
 
