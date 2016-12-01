@@ -42,7 +42,7 @@ def search(user):
 def searchTag(tag):
 	if(not bool(cur_doc)):
 		return render_template("index.html", loggedOut = "loggedOut")
-	posts=getPostsByUser(tag);
+	posts=getPostsByTag(tag);
 	return render_template("index.html", search=tag, cur_doc=cur_doc, posts=posts)
 
 @app.route('/settings')
@@ -211,6 +211,30 @@ def getPostsByUser(username):
 		string = string.replace('\n',' ')
 		posts = json.loads(string)
 		posts.reverse()
+	return posts
+
+def getPostsByTag(TAG):
+	posts=[]
+	count = 0
+	for id in db1:
+		doc = db1[id]
+		for tag in doc['tags']:
+			print(tag)
+			if(tag):
+				if(tag['tag']==TAG):
+					print(tag)
+					if(count==0):
+						string = '['
+					else:
+						string += ','
+					string += '{"username": "'+ doc['username'] +'", "post_content": "'+ doc['post_content'] +'", "post_time": "'+ doc['post_time'] +'","tags_string" : "'+ doc["tags_string"] +'"}'
+					count+=1
+	if(count!=0):
+		string+=']'
+		string = string.replace('\n',' ')
+		posts = json.loads(string)
+		posts.reverse()
+		print(posts)
 	return posts
 
 if __name__ == "__main__":
