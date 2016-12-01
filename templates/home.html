@@ -22,7 +22,11 @@
 	{% for post in posts %}
 	<div class="panel panel-info">
       <div class="panel-heading">{{ post.username }}</div>
-      <div class="panel-body">{{ post.post_content }}</div>
+      <div class="panel-body">
+      <p>{{ post.post_content }}</p>
+      <!--<small class="form-text text-muted"> {{ post.tags_string }}</small>-->
+      <font color="grey"> {{ post.tags_string }} </font>
+      </div>
       <div class="panel-footer">
      <small class="form-text text-muted"> {{ post.post_time }}</small></div>
     </div>
@@ -61,6 +65,11 @@
 	$("#search_user").click(function(e){
 		e.preventDefault();
 		var loc = "/search/users/".concat(document.getElementById("search").value);
+		window.location = loc;
+	});
+	$("#search_tag").click(function(e){
+		e.preventDefault();
+		var loc = "/search/tags/".concat(document.getElementById("search").value);
 		window.location = loc;
 	});
   	</script>

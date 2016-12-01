@@ -38,6 +38,13 @@ def search(user):
 	posts=getPostsByUser(user);
 	return render_template("index.html", search=user, cur_doc=cur_doc, posts=posts)
 
+@app.route('/search/tags/<tag>')
+def searchTag(tag):
+	if(not bool(cur_doc)):
+		return render_template("index.html", loggedOut = "loggedOut")
+	posts=getPostsByUser(tag);
+	return render_template("index.html", search=tag, cur_doc=cur_doc, posts=posts)
+
 @app.route('/settings')
 def settings():
 	if(not bool(cur_doc)):
@@ -196,7 +203,7 @@ def getPostsByUser(username):
 				string = '['
 			else:
 				string += ','
-			string += '{"username": "'+ doc['username'] +'", "post_content": "'+ doc['post_content'] +'", "post_time": "'+ doc['post_time'] +'"}'
+			string += '{"username": "'+ doc['username'] +'", "post_content": "'+ doc['post_content'] +'", "post_time": "'+ doc['post_time'] +'", "tags_string" : "'+ doc['tags_string'] +'"}'
 			count+=1
 	if(count!=0):
 		string+=']'
