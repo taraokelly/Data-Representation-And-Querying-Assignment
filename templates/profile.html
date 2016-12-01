@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- Tara O'Kelly- G00322214.
+	 Third Year, Data Representation and Querying, Software Development, GMIT.
+	 profile.html is responsible for displaying all current user posts. 
+	 profile.html communicates with TheFeed.py using the post method, jquery -->
 <html lang="en">
   <head>
   <meta charset="utf-8">
@@ -39,6 +43,7 @@
 	{% block content %}{% endblock %}
 
   	<script type="text/javascript">
+  	//functions to navigate and/or communicate with TheFeed.py
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();
   		window.location = "/";
@@ -70,6 +75,11 @@
 		e.preventDefault();
 		var loc = "/search/users/".concat(document.getElementById("search").value);
 		window.location = loc;
+	});
+	$("#search_tag").click(function(e){
+		e.preventDefault();
+		var loc = "/search/tags/".concat(document.getElementById("search1").value);
+			window.location = loc;
 	});
   	</script>
   </body>

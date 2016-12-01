@@ -1,15 +1,20 @@
+# Tara O'Kelly- G00322214.
+# Third Year, Data Representation and Querying, Software Development, GMIT.
 import couchdb, json, time
 from flask import Flask, render_template, request
 import flask as fl
 
 app = fl.Flask(__name__)
-
+# Set up server object, representing a CouchDB server and connect to databases
+# Adapted from https://pythonhosted.org/CouchDB/
 couch = couchdb.Server('http://127.0.0.1:5984/')
-db = couch['test1'] # existing
-db1 = couch['posts']
-
+db = couch['users_tf'] 
+db1 = couch['posts_tf']
+# representing the user details of the current user
 cur_doc = ""
-
+# Routing: @app.route is a decorator used to match URLs to view functions in Flask apps.
+# Each routing function checks for current user details 
+# and then renders the index.html template passing in the necessary values (using Jinja2, a template engine). 
 @app.route("/")
 def root():
 	if(not bool(cur_doc)):
@@ -57,6 +62,8 @@ def logout():
 	cur_doc=""
 	return ''
 
+# POST methods
+# Checks credentials, sets the cur_doc to the current user's details (if credentials are correct) and returns next route
 @app.route('/login', methods=["GET", "POST"])
 def login():
 	name = fl.request.values["username"]
@@ -65,8 +72,6 @@ def login():
 		doc = db[id]
 		if(doc['username']== name):
 			if(doc['password']== password):
-				global loggedIn
-				loggedIn = 1
 				global cur_doc
 				cur_doc = db[id]
 				return '/'
@@ -74,6 +79,7 @@ def login():
 				return '/Error/Invalid Password'
 	return '/Error/User Not Found'
 
+# Checks sign in info, adding to database posts_tf if correct or returning next route (/Error/<reason> route)
 @app.route('/register', methods=["GET", "POST"])
 def register():
 	name = fl.request.values["user"]
@@ -95,10 +101,10 @@ def register():
 		string = '/Error/Password Must Contain 8 Characters'
 	else:
 		string = 'Congrats ' + name + '!'
-		doc = {'username': name, 'password': password}
-		db.save(doc)
+		db.save({'username': name, 'password': password})
 	return string
 
+# Gets current time, builds tag string and converts to json. Then saves post to posts_tf database.
 @app.route('/addPost', methods=["GET", "POST"])
 def addPost():
 	post_content = fl.request.values["post_content"]
@@ -125,6 +131,7 @@ def addPost():
 	db1.save(doc)
 	return ''
 
+# Finds user posts and deletes each one. Then deletes current user.
 @app.route('/delete', methods=["GET","POST"])
 def delete():
 	global cur_doc 
@@ -135,7 +142,7 @@ def delete():
 	db.delete(cur_doc)
 	cur_doc= ""
 	return ''
-
+# Updates username of all current user's posts and updates current user details
 @app.route('/updateName', methods=["GET","POST"])
 def updateName():
 	global cur_doc
@@ -159,6 +166,7 @@ def updateName():
 			cur_doc = doc
 	return 'successful'
 
+# Validates new password and updates current user details
 @app.route('/updatePass', methods=["GET","POST"])
 def updatePass():
 	password = fl.request.values["password"]
@@ -185,7 +193,9 @@ def check():
 		return 'Correct'
 	return 'Incorrect Password'
 
+#Functions to get a list of certain posts
 def getPosts():
+	# Adapted http://stackoverflow.com/questions/1640054/multiple-couchdb-document-fetch-with-couchdb-python
 	rows = db1.view('_all_docs', include_docs=True)
 	docs = [row.doc for row in rows]
 	jstring = json.dumps((docs), indent=4)
@@ -219,10 +229,8 @@ def getPostsByTag(TAG):
 	for id in db1:
 		doc = db1[id]
 		for tag in doc['tags']:
-			print(tag)
 			if(tag):
 				if(tag['tag']==TAG):
-					print(tag)
 					if(count==0):
 						string = '['
 					else:
@@ -234,7 +242,6 @@ def getPostsByTag(TAG):
 		string = string.replace('\n',' ')
 		posts = json.loads(string)
 		posts.reverse()
-		print(posts)
 	return posts
 
 if __name__ == "__main__":

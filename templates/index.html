@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!-- Tara O'Kelly- G00322214.
+	 Third Year, Data Representation and Querying, Software Development, GMIT.
+	 The index.html template can inherit from login.html, home.html, profile.html, search.html or settings.html
+	 depending on how the template is rendered. -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,7 +13,6 @@
     <link rel = "stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.css') }}">
    	<script src="{{ url_for('static', filename='lib/jquery/dist/jquery.js') }}"></script>
    	<script src="{{ url_for('static', filename='lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-   <!--	<title>TheFeed</title>-->
     {% if loggedOut %}
   	{% extends "login.html" %}
   	{% else %}
@@ -73,6 +76,10 @@
 		{% endif %}
 
 		{% block content %}
+		</div>
+		 <div class="col-sm-2"></div>
+		</div>
+		<br/><br/>
 		<nav class="navbar navbar-dark navbar-fixed-bottom" style="background-color: #ffc78c;">
 		  <div class="container-fluid">
 		  <center>
@@ -83,8 +90,5 @@
 		  </div>
 		</nav>
 		{% endblock %}
-		</div>
-		 <div class="col-sm-2"></div>
-		</div>
   </body>
 </html>
