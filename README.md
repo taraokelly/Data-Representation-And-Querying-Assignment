@@ -20,15 +20,15 @@ I chose to create a blogging website as my single web-page application, as I tho
 
 2. HTML and Bootstrap - For the client side I used HTML and jQuery. I used Bootstap to create responsive designs in my HTML pages.
 
-3. CouchDB - I choose to utilize CouchDB a mechanism to store data. 
+3. CouchDB - I choose to utilize CouchDB as a mechanism to store data. 
 
 **Running this application**
 
-You will need to install Python3: [here](https://www.python.org/downloads/). After the installation of Python, you will have to import two Python modules: 
+I you do not have Python installed, you will need to install Python3([you can download it here](https://www.python.org/downloads/)). After the installation of Python, you will have to import two Python modules: 
 
 1. Flask
 
-2. Couchdb
+2. CouchDB
 
 Run the following commands to import the modules:
 
@@ -72,7 +72,7 @@ Python TheFeed.py
 
 **Conclusion:**
 
-To conclude, this project has been immensely rewarding. I had no experience in these technologies pior to this module(excluding HTML). I am certainly interested in continuing and furthing the progress and funtionality of this project. There are numerous other features that I would like to add to this SPA. Such as: allowing users to follow one another, allowing users to customize their profile and allowing users to view profiles, adding comments... etc. However if if were to follow up on this idea, I would start from the beginning and design the web app more efficiently.
+To conclude, this project has been immensely rewarding. I had no experience in these technologies pior to this module(excluding HTML). I am certainly interested in continuing and furthing the progress and funtionality of this project. There are numerous other features that I would like to add to this SPA. Such as allowing users to follow one another, allowing users to customize their profile and allowing users to view profiles, adding comments... etc. However, if I were to follow up on this idea, I would start from the beginning and design the web app more efficiently.
 
 **References:**
 
