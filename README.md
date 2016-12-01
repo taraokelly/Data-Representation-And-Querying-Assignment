@@ -1,8 +1,6 @@
 # Data-Representation-And-Querying-Assignment
 *A single-page web application(SPA) written in the programming language Python using the Flask framework. Third year, Data Representation and Querying, Software Development.*
 
-![Alt Text](https://github.com/taraokelly/Data-Representation-And-Querying-Assignment/blob/master/static/img/TheFeed.png "TheFeed")
-
 **TheFeed**
 
 I chose to create a blogging website as my single web-page application, as I thought it would provide a good demonstration of data representation and querying. The way I intended to deploy TheFeed would involve routing, which was a strong component in the project requirements. 
