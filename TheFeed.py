@@ -5,13 +5,16 @@ from flask import Flask, render_template, request
 import flask as fl
 
 app = fl.Flask(__name__)
+
 # Set up server object, representing a CouchDB server and connect to databases
 # Adapted from https://pythonhosted.org/CouchDB/
 couch = couchdb.Server('http://127.0.0.1:5984/')
 db = couch['users_tf'] 
 db1 = couch['posts_tf']
+
 # representing the user details of the current user
 cur_doc = ""
+
 # Routing: @app.route is a decorator used to match URLs to view functions in Flask apps.
 # Each routing function checks for current user details 
 # and then renders the index.html template passing in the necessary values (using Jinja2, a template engine). 
