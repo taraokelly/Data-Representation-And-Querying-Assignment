@@ -62,6 +62,11 @@
 		$.post("/addPost", data);
 		window.location = "/profile";
 	});
+	$("#search_user").click(function(e){
+		e.preventDefault();
+		var loc = "/search/users/".concat(document.getElementById("search").value);
+		window.location = loc;
+	});
   	</script>
   </body>
   </html>

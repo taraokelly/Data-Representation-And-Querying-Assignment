@@ -31,10 +31,12 @@ def profile():
 	posts=getPostsByUser(cur_doc['username'])
 	return render_template("index.html", profile="profile", cur_doc=cur_doc, posts=posts)
 
-@app.route('/search')
-def search():
-	
-	return ''
+@app.route('/search/users/<user>')
+def search(user):
+	if(not bool(cur_doc)):
+		return render_template("index.html", loggedOut = "loggedOut")
+	posts=getPostsByUser(user);
+	return render_template("index.html", search=user, cur_doc=cur_doc, posts=posts)
 
 @app.route('/settings')
 def settings():

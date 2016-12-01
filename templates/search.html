@@ -9,6 +9,7 @@
   	<br/>
   	<center>
   	<h2>Search Results</h2>
+    <h3>You searched for : {{ search }}</h3>
   	</center>
   	<br/>
 	<hr>
@@ -45,6 +46,11 @@
   		$.post("/logout");
   		window.location = "/";
   	});
+    $("#search_user").click(function(e){
+    e.preventDefault();
+    var loc = "/search/users/".concat(document.getElementById("search").value);
+    window.location = loc;
+  });
   	</script>
   </body>
   </html>
