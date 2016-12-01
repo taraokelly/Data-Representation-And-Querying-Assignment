@@ -105,16 +105,16 @@ def addPost():
 		count =0 
 		for tag in tags:
 			if(count==0):
-				tags1 = '['
+				temp = '['
 			else:
-				tags1 += ','
-			tags1 += '{ "tag" : "'+ tag + '"}'
+				temp+= ','
+			temp += '{ "tag" : "'+ tag + '"}'
 			count+=1
-		tags1 += ']' 
-		tags = json.loads(tags1)
-		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : tags }
+		temp += ']' 
+		tags = json.loads(temp)
+		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : tags, 'tags_string' : post_tags}
 	else:
-		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time }
+		doc = {'username' : cur_doc['username'], 'post_content' : post_content, 'post_time' : post_time, 'tags' : [], 'tags_string' : post_tags}
 	db1.save(doc)
 	return ''
 
