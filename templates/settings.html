@@ -6,7 +6,7 @@
     <title>TheFeed - Settings</title>
   </head>
   <body>
-  <br/>
+  <br/><br/><br/><br/>
   <center>
   <h2>Settings</h2>
   <small id="accountUser" class="form-text text-muted">User Account: {{ cur_doc.username }}</small>
@@ -115,7 +115,7 @@
 	    </div>
 	   </div>
 	 </div>
-
+	{% block content %}{% endblock %}
   <script type="text/javascript">
   	$("#nav_brand").click(function(e) {
   		e.preventDefault();

@@ -172,7 +172,7 @@ def updatePass():
 		return 'Password Must Contain 8 Characters'
 	for id in db:
 		doc =db[id]
-		if(doc['username']==doc['username']):
+		if(doc['username']==cur_doc['username']):
 			doc['password']=password
 			db[doc.id]=doc	
 			cur_doc = doc

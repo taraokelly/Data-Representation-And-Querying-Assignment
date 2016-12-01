@@ -14,7 +14,7 @@
   	{% extends "login.html" %}
   	{% else %}
    	<!-- Adapted from http://www.w3schools.com/bootstrap/bootstrap_navbar.asp and https://v4-alpha.getbootstrap.com/components/navbar/ -->
-  	<nav class="navbar navbar-inverse">
+  	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
 	    <a class="navbar-brand" href="#" id="nav_brand">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
@@ -73,7 +73,15 @@
 		{% endif %}
 
 		{% block content %}
-		<h1>Tester</h1>
+		<nav class="navbar navbar-dark navbar-fixed-bottom" style="background-color: #ffc78c;">
+		  <div class="container-fluid">
+		  <center>
+		  <a href="https://github.com/taraokelly/Data-Representation-And-Querying-Assignment">
+			<img src="{{ url_for('static', filename='githubsrc.png') }}" height="42" width="42">	
+	  	 </a>
+		   </center>
+		  </div>
+		</nav>
 		{% endblock %}
 		</div>
 		 <div class="col-sm-2"></div>

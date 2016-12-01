@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <title>TheFeed</title>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
 	  	<a class="navbar-brand" href="#" id="nav_brand">
 			<img src="{{ url_for('static', filename='TheFeed1.png') }}">	
@@ -24,7 +24,7 @@
   <body>
 	
 	<div class="container">
-		<br/>
+		<br/><br/><br/><br/>
 		{% if error %}
 		<div class="alert alert-danger" role="alert">
 		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -69,6 +69,7 @@
 	    </div>
 	   </div>
 	 </div>
+	 {% block content %}{% endblock %}
 	<script type="text/javascript">
 	$("#nav_brand").click(function(e) {
   		e.preventDefault();
